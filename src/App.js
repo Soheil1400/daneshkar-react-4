@@ -1,25 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import {createBrowserRouter, RouterProvider, Route} from "react-router-dom";
+import Home from "./section/home";
+import SingleContact from "./section/SingleContact";
+import {useState} from "react";
+import AddContact from "./section/AddContact";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [contacts, setContacts] = useState([
+        {id: 1, name: 'soheil', number: '0919'},
+        {id: 2, name: 'ali', number: '0912'},
+    ])
+
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Home contacts={contacts} setContacts={setContacts}/>,
+        },
+        {
+            path: "/addContact",
+            element: <AddContact contacts={contacts} setContacts={setContacts}/>,
+        },
+        {
+            path: "/editContact/:contactId",
+            element: <AddContact contacts={contacts} setContacts={setContacts}/>,
+        },
+        {
+            path: "/contacts/:contactId",
+            element: <SingleContact contacts={contacts}/>,
+        },
+    ]);
+    return <RouterProvider router={router}/>;
 }
 
 export default App;
